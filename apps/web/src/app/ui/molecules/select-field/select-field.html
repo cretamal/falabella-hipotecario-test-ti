@@ -1,0 +1,7 @@
+<app-text as="label" variant="caption" tone="muted" [for]="inputId()">{{ label() }}</app-text>
+<select [id]="inputId()" (change)="onChange($event)">
+  <option value="" [selected]="!value()">{{ emptyLabel() }}</option>
+  @for (option of options(); track option.value) {
+    <option [value]="option.value" [selected]="option.value === value()">{{ option.label }}</option>
+  }
+</select>

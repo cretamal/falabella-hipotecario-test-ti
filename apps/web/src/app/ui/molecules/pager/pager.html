@@ -1,0 +1,33 @@
+<nav class="pager" aria-label="Paginación" i18n-aria-label="@@pager.label">
+  @if (hasPrevious()) {
+    <div
+      appButton
+      [routerLink]="[]"
+      [queryParams]="{ page: page() - 1 }"
+      queryParamsHandling="merge"
+      i18n="@@pager.previous"
+    >
+      Anterior
+    </div>
+  } @else {
+    <span appButton aria-disabled="true" i18n="@@pager.previous">Anterior</span>
+  }
+
+  <app-text class="status" tone="muted" numeric i18n="@@pager.status"
+    >Página {{ page() }} de {{ totalPages() }}</app-text
+  >
+
+  @if (hasNext()) {
+    <div
+      appButton
+      [routerLink]="[]"
+      [queryParams]="{ page: page() + 1 }"
+      queryParamsHandling="merge"
+      i18n="@@pager.next"
+    >
+      Siguiente
+    </div>
+  } @else {
+    <span appButton aria-disabled="true" i18n="@@pager.next">Siguiente</span>
+  }
+</nav>

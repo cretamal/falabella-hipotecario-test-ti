@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+.footer {
+  padding-block: var(--space-5);
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+.link {
+  color: var(--color-accent);
+  text-decoration: underline;
+  cursor: pointer;
+}

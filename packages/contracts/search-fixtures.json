@@ -1,0 +1,18 @@
+{
+  "_": "Casos de paridad de la búsqueda: los leen los tests del BFF y del web (datos, no código).",
+  "maxLength": 50,
+  "minLength": 2,
+  "normalize": [
+    ["Pikachu", "pikachu"],
+    ["  Mr. Mime ", "mr mime"],
+    ["mr-mime", "mr mime"],
+    ["MR   MIME", "mr mime"],
+    ["Flabébé", "flabebe"],
+    ["Nidoran♀", "nidoran"],
+    ["#025", "025"],
+    ["Farfetch'd", "farfetch d"],
+    ["!!!", ""],
+    ["", ""],
+    ["   ", ""]
+  ]
+}

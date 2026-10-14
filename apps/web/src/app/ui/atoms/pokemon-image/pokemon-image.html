@@ -1,0 +1,22 @@
+@if (failed()) {
+  <span class="placeholder" aria-hidden="true" [style.width.px]="size()" [style.height.px]="size()"
+    >?</span
+  >
+} @else {
+  @if (placeholder() && !loaded()) {
+    <img class="thumb" [src]="placeholder()" alt="" aria-hidden="true" />
+  }
+  <img
+    #img
+    [src]="src()"
+    [alt]="alt()"
+    [width]="size()"
+    [height]="size()"
+    [attr.loading]="eager() ? 'eager' : 'lazy'"
+    [attr.fetchpriority]="eager() ? 'high' : null"
+    [class.pixelated]="pixelated()"
+    [class.over]="!!placeholder()"
+    (load)="loaded.set(true)"
+    (error)="failed.set(true)"
+  />
+}

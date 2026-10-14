@@ -1,0 +1,13 @@
+<div
+  class="stage"
+  [routerLink]="['/pokemon', stage().id]"
+  [attr.aria-current]="current() ? 'page' : null"
+  (pointerenter)="startIntent()"
+  (pointerleave)="cancelIntent()"
+  (focus)="startIntent()"
+  (blur)="cancelIntent()"
+  (touchstart)="startIntent(true)"
+>
+  <app-pokemon-image [src]="stage().imageUrl" [size]="compact() ? 48 : 72" pixelated />
+  <span>{{ stage().label }}</span>
+</div>

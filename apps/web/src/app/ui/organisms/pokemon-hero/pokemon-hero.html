@@ -1,0 +1,76 @@
+<!-- Ranura lateral (evolución): se proyecta una sola vez y se reutiliza en cada estado -->
+<ng-template #aside><ng-content select="[heroAside]" /></ng-template>
+
+@if (pokemon(); as p) {
+  <header class="hero">
+    <app-pokemon-image
+      class="artwork"
+      [src]="p.imageUrl"
+      [placeholder]="p.thumbUrl"
+      [alt]="p.label"
+      [size]="280"
+      eager
+    />
+    <div class="identity">
+      <app-text as="p" class="number" tone="muted" numeric>#{{ number() }}</app-text>
+      <app-text as="h1" class="title" variant="title">{{ p.label }}</app-text>
+      @if (p.genus) {
+        <app-text as="p" tone="muted">{{ p.genus }}</app-text>
+      }
+      <div class="types">
+        @for (type of p.types; track type.name) {
+          <app-type-chip [type]="type" />
+        }
+      </div>
+      <div class="meta">
+        <app-text tone="muted">{{ p.generation.label }}</app-text>
+        @if (p.legendary) {
+          <app-badge i18n="@@detail.legendary">Legendario</app-badge>
+        }
+        @if (p.mythical) {
+          <app-badge i18n="@@detail.mythical">Singular</app-badge>
+        }
+      </div>
+    </div>
+    <ng-container [ngTemplateOutlet]="aside" />
+  </header>
+} @else if (summary(); as s) {
+  <!-- Navegación optimista: mostramos lo que ya sabemos desde el catálogo mientras llega el resto -->
+  <header class="hero">
+    <app-pokemon-image
+      class="artwork"
+      [src]="s.imageUrl"
+      [alt]="s.label"
+      [size]="280"
+      pixelated
+      eager
+    />
+    <div class="identity">
+      <app-text as="p" class="number" tone="muted" numeric>#{{ number() }}</app-text>
+      <app-text as="h1" class="title" variant="title">{{ s.label }}</app-text>
+      <app-skeleton width="40%" />
+      <div class="types">
+        @for (type of s.types; track type.name) {
+          <app-type-chip [type]="type" />
+        }
+      </div>
+      <div class="meta"><app-skeleton shape="chip" /></div>
+    </div>
+    <ng-container [ngTemplateOutlet]="aside" />
+  </header>
+} @else {
+  <div class="hero" aria-hidden="true">
+    <app-skeleton class="artwork" shape="image" />
+    <div class="identity">
+      <app-skeleton width="3rem" />
+      <app-skeleton height="2.25rem" width="60%" />
+      <app-skeleton width="40%" />
+      <div class="types"><app-skeleton shape="chip" /><app-skeleton shape="chip" /></div>
+    </div>
+    <div class="aside-skeleton">
+      <app-skeleton shape="circle" width="56px" />
+      <app-skeleton shape="circle" width="56px" />
+      <app-skeleton shape="circle" width="56px" />
+    </div>
+  </div>
+}

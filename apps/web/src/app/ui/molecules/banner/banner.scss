@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+.banner {
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-surface-muted);
+  font-size: var(--font-size-sm);
+  text-align: center;
+
+  &.warning {
+    border-bottom: var(--border-width-strong) solid var(--color-danger);
+  }
+}

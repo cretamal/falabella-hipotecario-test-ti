@@ -1,0 +1,19 @@
+ul {
+  display: flex;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+[role='link'] {
+  color: var(--color-accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+[aria-current='true'] {
+  color: var(--color-text);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+}

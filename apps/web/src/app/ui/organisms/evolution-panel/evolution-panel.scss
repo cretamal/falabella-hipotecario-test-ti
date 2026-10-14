@@ -1,0 +1,43 @@
+@use 'breakpoints' as bp;
+
+/* Columna lateral de la cabecera: reparte el espacio con la identidad (flex) y desaparece si no hay evolución. */
+:host {
+  display: block;
+  flex: 2 1 var(--aside-basis);
+  min-width: 0;
+  padding-inline-start: var(--space-5);
+  border-inline-start: var(--border-width) solid var(--color-border);
+}
+
+:host(.none) {
+  display: none;
+}
+
+h2 {
+  margin-bottom: var(--space-3);
+}
+
+.loading {
+  display: flex;
+  gap: var(--space-4);
+  min-height: var(--aside-min-height);
+  align-items: center;
+}
+
+.error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Cuando la cabecera es estrecha, la columna baja bajo la identidad y el divisor pasa arriba. */
+@include bp.container-down(bp.$lg) {
+  :host {
+    flex-basis: 100%;
+    padding-inline-start: 0;
+    padding-top: var(--space-4);
+    border-inline-start: 0;
+    border-top: var(--border-width) solid var(--color-border);
+  }
+}

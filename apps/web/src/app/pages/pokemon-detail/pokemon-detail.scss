@@ -1,0 +1,23 @@
+.back {
+  min-height: var(--control-height);
+  border-radius: var(--radius-pill);
+  padding-inline: var(--space-3) var(--space-4);
+  box-shadow: var(--shadow-card);
+  font-weight: var(--font-weight-medium);
+}
+
+.arrow {
+  flex: none;
+  color: var(--color-accent);
+  transition: transform var(--transition);
+}
+
+.back:hover .arrow,
+.back:focus-visible .arrow {
+  transform: translateX(-3px);
+}
+
+.pokemon {
+  display: grid;
+  gap: var(--space-5);
+}

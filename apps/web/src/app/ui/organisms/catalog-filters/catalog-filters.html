@@ -1,0 +1,45 @@
+<form class="filters" role="search" (submit)="$event.preventDefault()">
+  <app-search-field
+    class="search"
+    inputId="search"
+    label="Buscar por nombre"
+    i18n-label="@@filters.search"
+    placeholder="Pikachu, char…"
+    i18n-placeholder="@@filters.searchPlaceholder"
+    [value]="values().q"
+    hint="Escribe al menos 2 caracteres"
+    i18n-hint="@@filters.searchHint"
+    [hintVisible]="tooShort()"
+    (textChange)="onText($event)"
+    (submitted)="onText($event, true)"
+  />
+
+  @if (options()) {
+    <app-select-field
+      inputId="type"
+      label="Tipo"
+      i18n-label="@@filters.type"
+      emptyLabel="Todos"
+      i18n-emptyLabel="@@filters.all"
+      [options]="typeOptions()"
+      [value]="values().type"
+      (selected)="typeChange.emit($event)"
+    />
+    <app-select-field
+      inputId="generation"
+      label="Generación"
+      i18n-label="@@filters.generation"
+      emptyLabel="Todas"
+      i18n-emptyLabel="@@filters.allFem"
+      [options]="generationOptions()"
+      [value]="generationValue()"
+      (selected)="onGeneration($event)"
+    />
+  }
+
+  @if (canClear()) {
+    <button appButton type="button" (click)="cleared.emit()" i18n="@@filters.clear">
+      Limpiar filtros
+    </button>
+  }
+</form>

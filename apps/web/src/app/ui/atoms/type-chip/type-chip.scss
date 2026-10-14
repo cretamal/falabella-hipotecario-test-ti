@@ -1,0 +1,22 @@
+$types:
+  normal, fighting, flying, poison, ground, rock, bug, ghost, steel, fire, water, grass, electric,
+  psychic, ice, dragon, dark, fairy;
+
+.chip {
+  display: inline-block;
+  padding: var(--space-half) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height);
+  white-space: nowrap;
+
+  @each $type in $types {
+    &[data-type='#{$type}'] {
+      background: var(--type-#{$type}-bg);
+      color: var(--type-#{$type}-fg);
+    }
+  }
+}

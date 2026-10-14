@@ -1,0 +1,39 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.csr.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": ["/favicon.ico", "/index.csr.html", "/manifest.webmanifest", "/*.css", "/*.js"]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": ["/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"]
+      }
+    },
+    {
+      "name": "sprites",
+      "installMode": "lazy",
+      "updateMode": "lazy",
+      "resources": { "urls": ["https://raw.githubusercontent.com/PokeAPI/sprites/**"] }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "detail",
+      "urls": ["/api/pokemon/*", "/api/pokemon/*/evolution"],
+      "cacheConfig": { "strategy": "performance", "maxSize": 100, "maxAge": "1h" }
+    },
+    {
+      "name": "api",
+      "urls": ["/api/pokemon", "/api/pokemon/**", "/api/filters"],
+      "cacheConfig": { "strategy": "freshness", "maxSize": 200, "maxAge": "1d", "timeout": "5s" }
+    }
+  ]
+}

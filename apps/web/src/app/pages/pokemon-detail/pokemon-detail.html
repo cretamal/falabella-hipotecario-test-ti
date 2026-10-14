@@ -1,0 +1,78 @@
+<app-page-layout>
+  <div pageToolbar appButton class="back" routerLink="/" [queryParams]="catalogParams()">
+    <svg
+      class="arrow"
+      viewBox="0 0 20 20"
+      width="18"
+      height="18"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M12 4 6 10l6 6"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+    <span i18n="@@detail.back">Volver al catálogo</span>
+  </div>
+
+  @let current = state();
+
+  @switch (current.status) {
+    @case ('loading') {
+      <app-text as="p" role="status" tone="muted" i18n="@@catalog.loading">Cargando…</app-text>
+      <article class="pokemon" aria-busy="true">
+        <app-pokemon-hero [summary]="summary()">
+          <app-evolution-panel heroAside />
+        </app-pokemon-hero>
+        <app-pokemon-about />
+        <app-stats-panel />
+      </article>
+    }
+    @case ('notfound') {
+      <app-state-message
+        heading="Pokémon no encontrado"
+        i18n-heading="@@detail.notFound.title"
+        description="No existe ningún Pokémon con ese nombre o número."
+        i18n-description="@@detail.notFound.description"
+      >
+        <div appButton="primary" routerLink="/" i18n="@@detail.notFound.action">Ir al catálogo</div>
+      </app-state-message>
+    }
+    @case ('error') {
+      <app-state-message
+        kind="error"
+        heading="No pudimos cargar este Pokémon"
+        i18n-heading="@@detail.error.title"
+        description="El servicio no respondió. Revisa tu conexión e inténtalo de nuevo."
+        i18n-description="@@detail.error.description"
+      >
+        <button appButton="primary" type="button" (click)="retry()" i18n="@@common.retry">
+          Reintentar
+        </button>
+      </app-state-message>
+    }
+    @case ('ready') {
+      @let p = current.pokemon;
+      <article class="pokemon">
+        @let evo = evolution();
+        <app-pokemon-hero [pokemon]="p">
+          <app-evolution-panel
+            heroAside
+            [root]="evo.status === 'ready' ? evo.root : undefined"
+            [failed]="evo.status === 'error'"
+            [currentName]="p.name"
+            (retry)="retryEvolution()"
+            (intent)="gateway.prefetchDetail($event)"
+          />
+        </app-pokemon-hero>
+        <app-pokemon-about [pokemon]="p" />
+        <app-stats-panel [stats]="p.stats" />
+      </article>
+    }
+  }
+</app-page-layout>

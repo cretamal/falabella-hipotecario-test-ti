@@ -1,0 +1,19 @@
+<div
+  class="skip-link"
+  role="link"
+  tabindex="0"
+  (click)="skipToMain($event, main)"
+  (keydown.enter)="skipToMain($event, main)"
+  i18n="@@shell.skip"
+>
+  Saltar al contenido
+</div>
+
+<ng-content select="[shellHeader]" />
+<ng-content select="[shellBanners]" />
+
+<main id="main" #main tabindex="-1">
+  <ng-content />
+</main>
+
+<ng-content select="[shellFooter]" />

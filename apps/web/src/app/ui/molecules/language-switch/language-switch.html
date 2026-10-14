@@ -1,0 +1,16 @@
+<nav aria-label="Idioma" i18n-aria-label="@@shell.language">
+  <ul role="list">
+    @for (option of options(); track option.id) {
+      <li>
+        <div
+          class="option"
+          [appHardLink]="hrefFor()(option.id)"
+          [attr.lang]="option.id"
+          [attr.aria-current]="option.id === active() ? 'true' : null"
+        >
+          {{ option.label }}
+        </div>
+      </li>
+    }
+  </ul>
+</nav>

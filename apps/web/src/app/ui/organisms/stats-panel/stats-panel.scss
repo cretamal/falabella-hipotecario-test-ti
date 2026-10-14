@@ -1,0 +1,80 @@
+@use 'breakpoints' as bp;
+
+:host {
+  display: block;
+}
+
+/* Dos zonas: las barras a la izquierda y el resumen del total a la derecha (se apilan en pantallas estrechas). */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, var(--side-panel-width));
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.bars {
+  display: grid;
+  grid-template-columns: auto 3rem minmax(0, 1fr);
+  gap: var(--space-3) var(--space-3);
+  max-width: 44rem;
+}
+
+.row {
+  grid-column: 1 / -1;
+}
+
+/* Las barras entran una tras otra, con un pequeño desfase entre cada una. */
+app-stat-bar:nth-child(2) {
+  --meter-delay: calc(var(--motion-stagger) * 1);
+}
+
+app-stat-bar:nth-child(3) {
+  --meter-delay: calc(var(--motion-stagger) * 2);
+}
+
+app-stat-bar:nth-child(4) {
+  --meter-delay: calc(var(--motion-stagger) * 3);
+}
+
+app-stat-bar:nth-child(5) {
+  --meter-delay: calc(var(--motion-stagger) * 4);
+}
+
+app-stat-bar:nth-child(6) {
+  --meter-delay: calc(var(--motion-stagger) * 5);
+}
+
+.summary {
+  display: grid;
+  gap: var(--space-2);
+  padding-inline-start: var(--space-6);
+  border-inline-start: var(--border-width) solid var(--color-border);
+
+  .summary-label {
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-caps);
+  }
+
+  .total {
+    font-size: var(--font-size-2xl);
+    line-height: var(--line-height-display);
+  }
+
+  .level {
+    text-transform: capitalize;
+  }
+}
+
+@include bp.down(bp.$md) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  .summary {
+    padding-inline-start: 0;
+    padding-top: var(--space-4);
+    border-inline-start: 0;
+    border-top: var(--border-width) solid var(--color-border);
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "scripts": {
+    "ng": "ng",
+    "dev": "ng serve --configuration development",
+    "dev:en": "ng serve --configuration development-en",
+    "build": "ng build",
+    "i18n": "ng extract-i18n && python3 -I scripts/translate-en.py",
+    "serve:ssr": "node dist/web/server/server.mjs",
+    "test": "node --test \"scripts/*.test.mjs\" && ng test --watch=false",
+    "e2e": "playwright test",
+    "lint": "eslint \"src/**/*.{ts,html}\""
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "^21.2.0",
+    "@angular/compiler": "^21.2.0",
+    "@angular/core": "^21.2.0",
+    "@angular/forms": "^21.2.0",
+    "@angular/localize": "^21.2.25",
+    "@angular/platform-browser": "^21.2.0",
+    "@angular/platform-server": "^21.2.0",
+    "@angular/router": "^21.2.0",
+    "@angular/service-worker": "^21.2.25",
+    "@angular/ssr": "^21.2.26",
+    "@pokedex/contracts": "^1.0.0",
+    "compression": "^1.8.2",
+    "express": "^5.1.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.2.26",
+    "@angular/cli": "^21.2.26",
+    "@angular/compiler-cli": "^21.2.0",
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.64.0",
+    "@types/compression": "^1.8.1",
+    "@types/express": "^5.0.1",
+    "@types/node": "^20.17.19",
+    "angular-eslint": "^21.4.0",
+    "eslint": "^9.39.5",
+    "jsdom": "^28.0.0",
+    "prettier": "^3.8.1",
+    "typescript": "~5.9.2",
+    "typescript-eslint": "^8.71.2",
+    "vitest": "^4.0.8"
+  }
+}

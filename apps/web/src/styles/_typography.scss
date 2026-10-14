@@ -1,0 +1,85 @@
+// Tipografía de <app-text>: es la única hoja que le da estilo al texto (variante, peso, tono y alineación).
+// El componente solo expone data-attributes; acá se traducen a tokens.
+
+app-text {
+  display: block;
+  color: var(--color-text);
+}
+
+app-text[data-tag='span'],
+app-text[data-tag='strong'],
+app-text[data-tag='em'],
+app-text[data-tag='small'] {
+  display: inline;
+}
+
+// El elemento interno hereda del host (los encabezados traen estilos propios del navegador).
+app-text > * {
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+
+// Variantes (con su peso por defecto)
+app-text[data-variant='caption'] {
+  font-size: var(--font-size-sm);
+}
+
+app-text[data-variant='heading'] {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+app-text[data-variant='title'] {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+// Peso explícito (gana a la variante)
+app-text[data-weight='regular'] {
+  font-weight: var(--font-weight-regular);
+}
+
+app-text[data-weight='medium'] {
+  font-weight: var(--font-weight-medium);
+}
+
+app-text[data-weight='semibold'] {
+  font-weight: var(--font-weight-semibold);
+}
+
+app-text[data-weight='bold'] {
+  font-weight: var(--font-weight-bold);
+}
+
+// Tono
+app-text[data-tone='muted'] {
+  color: var(--color-text-muted);
+}
+
+app-text[data-tone='danger'] {
+  color: var(--color-danger);
+}
+
+// Alineación y números
+app-text[data-align] {
+  text-align: var(--text-align);
+}
+
+app-text[data-align='start'] {
+  --text-align: start;
+}
+
+app-text[data-align='center'] {
+  --text-align: center;
+}
+
+app-text[data-align='end'] {
+  --text-align: end;
+}
+
+app-text[data-numeric] {
+  font-variant-numeric: tabular-nums;
+}

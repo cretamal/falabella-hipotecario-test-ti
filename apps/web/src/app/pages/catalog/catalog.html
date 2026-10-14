@@ -1,0 +1,98 @@
+<app-page-layout>
+  <div pageToolbar>
+    <h1 class="visually-hidden" i18n="@@catalog.heading">Catálogo de Pokémon</h1>
+    <app-catalog-filters
+      [values]="params()"
+      [options]="filters()"
+      [canClear]="hasFilters()"
+      (searchChange)="onSearch($event)"
+      (typeChange)="onType($event)"
+      (generationChange)="onGeneration($event)"
+      (cleared)="clearFilters()"
+    />
+  </div>
+
+  @let current = state();
+
+  <app-text as="p" class="count" variant="caption" tone="muted" role="status" live="polite">
+    @if (current.status === 'ready' && !current.stale) {
+      <ng-container i18n="@@catalog.count">{current.page.total, plural,
+        =0 {Sin resultados}
+        =1 {1 resultado}
+        other {{{ current.page.total }} resultados}
+      }</ng-container>
+      @if (current.page.fuzzy) {
+        <span class="fuzzy" i18n="@@catalog.fuzzy"
+          >Sin coincidencias exactas para «{{ params().q }}»: mostrando nombres parecidos.</span
+        >
+      }
+    } @else if (current.status === 'ready') {
+      <ng-container i18n="@@catalog.searching">Buscando…</ng-container>
+    } @else if (current.status === 'loading') {
+      <ng-container i18n="@@catalog.loading">Cargando…</ng-container>
+    }
+  </app-text>
+
+  @switch (current.status) {
+    @case ('loading') {
+      <app-pokemon-grid loading />
+    }
+    @case ('error') {
+      <app-state-message
+        kind="error"
+        heading="No pudimos cargar los Pokémon"
+        i18n-heading="@@catalog.error.title"
+        description="El servicio no respondió. Revisa tu conexión e inténtalo de nuevo."
+        i18n-description="@@catalog.error.description"
+      >
+        <button appButton="primary" type="button" (click)="retry()" i18n="@@common.retry">
+          Reintentar
+        </button>
+      </app-state-message>
+    }
+    @case ('ready') {
+      @if (current.page.items.length) {
+        <app-pokemon-grid
+          [items]="current.page.items"
+          [stale]="current.stale"
+          (selected)="hint.set($event)"
+          (intent)="gateway.prefetchDetail($event)"
+        />
+        <app-pager [page]="params().page" [totalPages]="totalPages(current.page)" />
+      } @else if (current.page.total > 0) {
+        <app-state-message
+          heading="Esta página no existe"
+          i18n-heading="@@catalog.pageOutOfRange.title"
+        >
+          <div
+            appButton="primary"
+            routerLink="."
+            [queryParams]="{ page: null }"
+            queryParamsHandling="merge"
+            i18n="@@catalog.pageOutOfRange.action"
+          >
+            Ir a la primera página
+          </div>
+        </app-state-message>
+      } @else {
+        <app-state-message
+          heading="Sin resultados"
+          i18n-heading="@@catalog.empty.title"
+          description="Prueba con otro nombre o quita algún filtro."
+          i18n-description="@@catalog.empty.description"
+        >
+          @if (hasFilters()) {
+            <button
+              appButton="primary"
+              type="button"
+              (click)="clearFilters()"
+              i18n="@@filters.clear"
+            >
+              Limpiar filtros
+            </button>
+          }
+        </app-state-message>
+      }
+    }
+  }
+</app-page-layout>

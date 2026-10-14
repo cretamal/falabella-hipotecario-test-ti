@@ -1,0 +1,19 @@
+@if (loading()) {
+  <div class="grid">
+    @for (_ of placeholders(); track $index) {
+      <app-pokemon-card />
+    }
+  </div>
+} @else {
+  <ul class="grid" role="list" [class.stale]="stale()" [attr.aria-busy]="stale() || null">
+    @for (pokemon of items(); track pokemon.id) {
+      <li>
+        <app-pokemon-card
+          [pokemon]="pokemon"
+          (selected)="selected.emit($event)"
+          (intent)="intent.emit($event)"
+        />
+      </li>
+    }
+  </ul>
+}

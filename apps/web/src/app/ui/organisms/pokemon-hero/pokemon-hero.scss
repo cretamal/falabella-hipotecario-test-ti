@@ -1,0 +1,46 @@
+:host {
+  display: block;
+}
+
+.hero {
+  /* La ranura lateral decide cómo acomodarse según el ancho de la cabecera (container query). */
+  container-type: inline-size;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-5);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.artwork {
+  width: min(var(--artwork-size), 100%);
+}
+
+.identity {
+  display: grid;
+  gap: var(--space-2);
+  flex: 1 1 var(--identity-basis);
+}
+
+.title {
+  overflow-wrap: anywhere;
+}
+
+.types,
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.aside-skeleton {
+  display: flex;
+  flex: 2 1 var(--aside-basis);
+  align-items: center;
+  gap: var(--space-4);
+  min-height: var(--aside-min-height);
+}

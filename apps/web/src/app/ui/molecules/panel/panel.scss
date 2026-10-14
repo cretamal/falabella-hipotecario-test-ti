@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+.panel {
+  padding: var(--space-5);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.heading {
+  margin-bottom: var(--space-3);
+}

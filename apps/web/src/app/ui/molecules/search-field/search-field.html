@@ -1,0 +1,22 @@
+<app-text as="label" variant="caption" tone="muted" [for]="inputId()">{{ label() }}</app-text>
+<!-- [attr.value]: deja el valor inicial también en el HTML del SSR, sin pisar lo que el usuario esté escribiendo -->
+<input
+  #field
+  type="search"
+  autocomplete="off"
+  inputmode="search"
+  enterkeyhint="search"
+  spellcheck="false"
+  autocapitalize="off"
+  [id]="inputId()"
+  [attr.maxlength]="maxLength()"
+  [attr.placeholder]="placeholder()"
+  [attr.value]="value()"
+  [attr.aria-describedby]="hintVisible() ? hintId() : null"
+  (input)="onInput($event)"
+  (keydown.enter)="submitted.emit(field.value)"
+  (keydown.escape)="onEscape()"
+/>
+@if (hintVisible()) {
+  <app-text [id]="hintId()" variant="caption" tone="muted">{{ hint() }}</app-text>
+}

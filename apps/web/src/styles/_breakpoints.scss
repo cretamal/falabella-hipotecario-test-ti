@@ -1,0 +1,25 @@
+// Puntos de ruptura: las media queries no leen variables CSS, por eso viven acá (Sass) y no en _tokens.scss.
+// Uso en un componente:  @use 'breakpoints' as bp;  @include bp.down(bp.$md) { … }
+// `down` = hasta ese ancho (incluido); `above` = estrictamente por encima de él.
+
+$sm: 40rem; // móvil
+$md: 56rem; // tablet: las zonas de dos columnas se apilan
+$lg: 64rem; // ancho de contenedor (cabecera de la ficha)
+
+@mixin down($width) {
+  @media (max-width: $width) {
+    @content;
+  }
+}
+
+@mixin above($width) {
+  @media (min-width: $width + 0.0625rem) {
+    @content;
+  }
+}
+
+@mixin container-down($width) {
+  @container (max-width: #{$width}) {
+    @content;
+  }
+}

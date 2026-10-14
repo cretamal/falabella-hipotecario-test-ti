@@ -1,0 +1,47 @@
+<app-evolution-stage
+  [stage]="node()"
+  [current]="isCurrent()"
+  [compact]="compact()"
+  (intent)="intent.emit($event)"
+/>
+
+@if (node().evolvesTo.length) {
+  @if (wide()) {
+    <span class="down" aria-hidden="true">↓</span>
+    <ul class="next" role="list">
+      @for (child of node().evolvesTo; track child.id) {
+        <li>
+          <app-evolution-tree
+            [node]="child"
+            [currentName]="currentName()"
+            [compact]="compact()"
+            (intent)="intent.emit($event)"
+          />
+          <app-evolution-conditions [label]="child.label" [items]="child.conditions" />
+        </li>
+      }
+    </ul>
+  } @else {
+    <ul class="next" role="list">
+      @for (child of node().evolvesTo; track child.id) {
+        <li>
+          <p class="how">
+            <span aria-hidden="true">→</span>
+            <span class="visually-hidden" i18n="@@evolution.evolvesTo"
+              >Evoluciona a {{ child.label }}:</span
+            >
+            @for (condition of child.conditions; track condition) {
+              <span class="condition">{{ condition }}</span>
+            }
+          </p>
+          <app-evolution-tree
+            [node]="child"
+            [currentName]="currentName()"
+            [compact]="compact()"
+            (intent)="intent.emit($event)"
+          />
+        </li>
+      }
+    </ul>
+  }
+}

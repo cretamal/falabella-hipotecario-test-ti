@@ -1,0 +1,7 @@
+/* Las columnas las define el contenedor (subgrid): todas las filas comparten el ancho de la etiqueta más larga. */
+:host {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  align-items: center;
+}

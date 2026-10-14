@@ -1,0 +1,31 @@
+@if (pokemon(); as p) {
+  <!-- eslint-disable-next-line @angular-eslint/template/interactive-supports-focus -- RouterLink añade tabindex y rol de enlace -->
+  <div
+    class="card"
+    [routerLink]="['/pokemon', p.name]"
+    (click)="select()"
+    (keydown.enter)="select()"
+    (pointerenter)="startIntent()"
+    (pointerleave)="cancelIntent()"
+    (focus)="startIntent()"
+    (blur)="cancelIntent()"
+    (touchstart)="startIntent(true)"
+  >
+    <!-- alt vacío a propósito: el nombre ya es parte del texto del enlace -->
+    <app-pokemon-image [src]="p.imageUrl" [size]="96" pixelated />
+    <app-text class="number" variant="caption" tone="muted" numeric>#{{ number() }}</app-text>
+    <app-text class="name" weight="semibold" align="center">{{ p.label }}</app-text>
+    <span class="types">
+      @for (type of p.types; track type.name) {
+        <app-type-chip [type]="type" />
+      }
+    </span>
+  </div>
+} @else {
+  <div class="card" aria-hidden="true">
+    <app-skeleton shape="image" width="96px" />
+    <app-skeleton width="2.5rem" />
+    <app-skeleton width="5rem" />
+    <span class="types"><app-skeleton shape="chip" /></span>
+  </div>
+}

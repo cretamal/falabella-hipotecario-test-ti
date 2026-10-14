@@ -1,0 +1,63 @@
+:host {
+  display: block;
+}
+
+.track {
+  --meter-color: var(--color-accent);
+
+  position: relative;
+  height: var(--meter-height);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  overflow: hidden;
+
+  &.low {
+    --meter-color: var(--stat-low);
+  }
+
+  &.mid {
+    --meter-color: var(--stat-mid);
+  }
+
+  &.high {
+    --meter-color: var(--stat-high);
+  }
+
+  &.top {
+    --meter-color: var(--stat-top);
+  }
+}
+
+.fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--meter-color);
+  transform-origin: left;
+  animation: meter-grow var(--motion-enter) backwards;
+  animation-delay: var(--meter-delay, 0s);
+}
+
+/* Cortes cada 50 de 255 (19,6078 %): ayudan a leer la barra de un vistazo. */
+.guides::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to right,
+    transparent 0 calc(19.6078% - 1px),
+    var(--color-surface) calc(19.6078% - 1px) 19.6078%
+  );
+  pointer-events: none;
+}
+
+@keyframes meter-grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    animation: none;
+  }
+}

@@ -1,0 +1,36 @@
+@if (visible()) {
+  <section aria-labelledby="evolution-heading">
+    <app-text
+      as="h2"
+      [id]="'evolution-heading'"
+      variant="caption"
+      tone="muted"
+      weight="semibold"
+      i18n="@@detail.evolution"
+      >Evolución</app-text
+    >
+    @if (root(); as node) {
+      <app-evolution-tree
+        compact
+        [node]="node"
+        [currentName]="currentName()"
+        (intent)="intent.emit($event)"
+      />
+    } @else if (failed()) {
+      <div class="error" role="alert">
+        <app-text as="p" tone="danger" i18n="@@detail.evolution.error"
+          >No pudimos cargar la evolución.</app-text
+        >
+        <button appButton type="button" (click)="retry.emit()" i18n="@@common.retry">
+          Reintentar
+        </button>
+      </div>
+    } @else {
+      <div class="loading">
+        <app-skeleton shape="circle" width="56px" />
+        <app-skeleton shape="circle" width="56px" />
+        <app-skeleton shape="circle" width="56px" />
+      </div>
+    }
+  </section>
+}

@@ -1,0 +1,113 @@
+@use 'breakpoints' as bp;
+
+:host {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.next {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  > li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+}
+
+.how {
+  display: grid;
+  justify-items: center;
+  max-width: 9rem;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+/* En pantallas estrechas (también en modo compacto) el árbol se apila en vertical, con su guía al costado. */
+@include bp.down(bp.$sm) {
+  :host,
+  .next > li {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .next {
+    padding-left: var(--space-4);
+    border-left: var(--border-width-strong) solid var(--color-border);
+  }
+
+  .how {
+    max-width: none;
+    justify-items: start;
+    text-align: left;
+  }
+}
+
+/* Compacto (solo en pantallas anchas): las ramas se reparten en filas y bajan de línea según el ancho. */
+@include bp.above(bp.$sm) {
+  :host(.compact) {
+    gap: var(--space-3);
+
+    .next {
+      display: flex;
+      flex: 1 1 0;
+      flex-wrap: wrap;
+      min-width: 0;
+      gap: var(--space-2) var(--space-4);
+
+      > li {
+        gap: var(--space-2);
+      }
+    }
+
+    .how {
+      max-width: 5rem;
+      font-size: var(--font-size-xs);
+      line-height: var(--line-height-snug);
+    }
+  }
+}
+
+/* Muchas ramas: la etapa de origen arriba y las ramas en rejilla (4 columnas; 2 en móvil). Va al final para ganarle a las reglas anteriores. */
+:host(.wide) {
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+
+  .down {
+    color: var(--color-text-muted);
+  }
+
+  .next {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-4) var(--space-3);
+    width: 100%;
+    padding: 0;
+    border-left: 0;
+
+    > li {
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-1);
+      min-width: 0;
+    }
+  }
+}
+
+:host(.wide) app-evolution-tree {
+  flex-direction: column;
+  align-items: center;
+}
+
+@include bp.down(bp.$sm) {
+  :host(.wide) .next {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

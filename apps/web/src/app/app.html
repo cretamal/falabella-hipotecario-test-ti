@@ -1,0 +1,27 @@
+<app-shell>
+  <app-header shellHeader>
+    @if (showLanguages) {
+      <app-language-switch [options]="locales" [active]="activeLocale" [hrefFor]="localeHref" />
+    }
+  </app-header>
+
+  <div shellBanners>
+    @if (!online()) {
+      <app-banner tone="warning" i18n="@@shell.offline"
+        >Sin conexión. Mostrando los datos guardados.</app-banner
+      >
+    }
+    @if (updateReady()) {
+      <app-banner>
+        <span i18n="@@shell.updateReady">Hay una nueva versión disponible.</span>
+        <button class="link-button" type="button" (click)="reload()" i18n="@@shell.update">
+          Actualizar
+        </button>
+      </app-banner>
+    }
+  </div>
+
+  <router-outlet />
+
+  <app-footer shellFooter />
+</app-shell>

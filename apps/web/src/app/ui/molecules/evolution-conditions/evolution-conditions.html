@@ -1,0 +1,15 @@
+<p class="how">
+  <span class="visually-hidden" i18n="@@evolution.evolvesTo">Evoluciona a {{ label() }}:</span>
+  @for (condition of shown(); track condition) {
+    <span class="condition">{{ condition }}</span>
+  }
+  @if (hidden() > 0) {
+    <button type="button" class="more" [attr.aria-expanded]="open()" (click)="open.set(!open())">
+      @if (open()) {
+        <ng-container i18n="@@evolution.less">Ocultar</ng-container>
+      } @else {
+        <ng-container i18n="@@evolution.more">+{{ hidden() }} más</ng-container>
+      }
+    </button>
+  }
+</p>

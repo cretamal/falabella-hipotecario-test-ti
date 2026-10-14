@@ -1,0 +1,58 @@
+@mixin shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-skeleton) 25%,
+    var(--color-surface-muted) 50%,
+    var(--color-skeleton) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer var(--motion-shimmer) infinite;
+}
+
+:host {
+  display: block;
+  height: 1rem;
+  border-radius: var(--radius-md);
+  @include shimmer;
+}
+
+:host([data-shape='circle']) {
+  aspect-ratio: 1;
+  height: auto;
+  border-radius: var(--radius-pill);
+}
+
+:host([data-shape='image']) {
+  aspect-ratio: 1;
+  height: auto;
+}
+
+:host([data-shape='chip']) {
+  width: 4rem;
+  height: 1.5rem;
+  border-radius: var(--radius-pill);
+}
+
+:host([data-shape='text']) {
+  display: grid;
+  gap: var(--space-2);
+  height: auto;
+  background: none;
+  animation: none;
+}
+
+.bar {
+  height: 1em;
+  border-radius: var(--radius-sm);
+  @include shimmer;
+
+  &:last-child:not(:only-child) {
+    width: 60%;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}

@@ -1,0 +1,39 @@
+<app-panel heading="Estadísticas base" i18n-heading="@@detail.stats" headingId="stats-heading">
+  @if (stats(); as list) {
+    <div class="layout">
+      <div class="bars">
+        @for (stat of list; track stat.name) {
+          <app-stat-bar [stat]="stat" />
+        }
+      </div>
+      <div class="summary">
+        <app-text variant="caption" tone="muted" class="summary-label" i18n="@@detail.total"
+          >Total</app-text
+        >
+        <app-text as="strong" class="total" weight="bold">{{ total() }}</app-text>
+        <app-meter
+          [value]="total()"
+          [max]="totalMax"
+          label="Total"
+          i18n-label="@@detail.total"
+          [tone]="tone()"
+          [valueText]="total() + ', ' + level()"
+        />
+        <app-text tone="muted" class="level">{{ level() }}</app-text>
+      </div>
+    </div>
+  } @else {
+    <div class="layout">
+      <div class="bars">
+        @for (_ of placeholders; track $index) {
+          <app-skeleton shape="text" class="row" />
+        }
+      </div>
+      <div class="summary">
+        <app-skeleton width="4rem" />
+        <app-skeleton height="2.5rem" width="6rem" />
+        <app-skeleton shape="text" />
+      </div>
+    </div>
+  }
+</app-panel>
